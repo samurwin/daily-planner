@@ -27,7 +27,7 @@ var colourCoded = function() {
         var currentTime = moment().hour();
 
         // create conditional statement to change colour of textarea
-        if (currentTime === eventTime) {
+        if (currentTime == eventTime) {
             $(this).removeClass();
             $(this).addClass("present col-10 description");
         } else if (currentTime > eventTime) {
@@ -72,19 +72,18 @@ var saveEvent = function() {
 
 // load the saved events to the page
 var loadEvents = function() {
-    events = JSON.parse(localStorage.getItem("events"));
+    var localStorageEvents = JSON.parse(localStorage.getItem("events"));
 
-    // if there are no saved events the events array is empty
-    if (!events) {
-        events = [];
-    }
 
     // add each event to the page
-    $.each(events[i], function() {
-        
-    })
+    for (var i =0; i < localStorageEvents.length; i++) {
+        console.log();
+    var selectorId = localStorageEvents[i].time;
+    
+       document.getElementById(selectorId).value = localStorageEvents[i].description;
+    }
 };
 
-// loadEvents();
+loadEvents();
 displayDate();
 colourCoded();
