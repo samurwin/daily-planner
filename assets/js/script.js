@@ -1,11 +1,16 @@
-// displayDate
+// variable for the calendar container
+var containerEl = document.querySelector(".container");
+
+// empty array to hold the events
+var events = [];
+
+// displayDate at the top of the page
 var displayDate = function() {
     var date = moment().format('dddd, MMMM Do');
 
     $('#currentDay').text(date);
 };
 
-// colourCoded
 // setInterval to check if an event is past, present or future every hour
 setInterval (function(){
     colourCoded();
@@ -35,7 +40,51 @@ var colourCoded = function() {
     });
 };
 
-// saveEvents
+// create function to save events to the localStorage when the save button is clicked
+$(".time-block").on("click", ".saveBtn", function() {
+    // create an object for the event
+    var eventTime = $(this)
+    .closest(".time-block")
+    .find(".description")
+    .attr("id");
 
+    var eventDescription = $(this)
+    .closest(".time-block")
+    .find(".description")
+    .val()
+    .trim();
+
+    var savedEvent = {
+        time: eventTime,
+        description: eventDescription
+    }
+    console.log(savedEvent);
+    // add the object to the events array
+    events.push(savedEvent);
+    console.log(events);
+    // save the updated array to the localStorage
+    saveEvent();
+});
+
+var saveEvent = function() {
+    localStorage.setItem("events", JSON.stringify(events));
+};
+
+// load the saved events to the page
+var loadEvents = function() {
+    events = JSON.parse(localStorage.getItem("events"));
+
+    // if there are no saved events the events array is empty
+    if (!events) {
+        events = [];
+    }
+
+    // add each event to the page
+    $.each(events[i], function() {
+        
+    })
+};
+
+// loadEvents();
 displayDate();
 colourCoded();
